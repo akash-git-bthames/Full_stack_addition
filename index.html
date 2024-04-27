@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <script>
+    function addition() {
+      let a = document.getElementById("input1").value;
+      let b = document.getElementById("input2").value;
+
+      //   let element = document.getElementById("finalsum");
+      //   element.innerHTML = parseInt(a) + parseInt(b);
+      fetch("http://localhost:5500/sum", {
+        method: "POST",
+
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ a: a, b: b }),
+      })
+        .then((response) => response.json())
+        .then(
+          (data) =>
+            (document.getElementById("finalsum").innerText = `Sum: ${data.sum}`)
+        )
+        .catch((error) => console.error("error:", error));
+    }
+  </script>
+  <body>
+    <input id="input1" type="number" placeholder="first Number" /><br /><br />
+    <input id="input2" type="number" placeholder="Second Number" /> <br /><br />
+    <button onclick="addition()">Calculate</button>
+    <div id="finalsum"></div>
+  </body>
+</html>
